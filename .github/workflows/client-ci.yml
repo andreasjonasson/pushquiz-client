@@ -1,0 +1,29 @@
+name: CI - Client (React)
+
+on:
+  push:
+    paths:
+      - 'pushquiz-client/**'
+  pull_request:
+    paths:
+      - 'pushquiz-client/**'
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pushquiz-client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: pushquiz-client/package-lock.json
+      - name: Install
+        run: npm ci || npm i
+      - name: Test
+        run: npm run test
+      - name: Build
+        run: npm run build
