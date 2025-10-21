@@ -110,7 +110,7 @@ export default function App() {
      } else if (msg.type === 'score.update') {
        // only resolve if it's *our* score for the same question we answered
        // server payload: { userId, delta, total } — no qid; we’ll resolve on any score.update for our user.
-       if (msg.payload.userId === userId) {
+       if (msg.payload.userId === userId && msg.payload.qid === awaitingScoreForQid) {
          if (closeTimeoutRef.current) { clearTimeout(closeTimeoutRef.current); closeTimeoutRef.current = null }
          setAwaitingScoreForQid(null)
          if (wantToClose) reallyClose()
